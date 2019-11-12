@@ -1,0 +1,2 @@
+Configure auto updates of choco packages.
+merge gitconfig with main dotfiles if possible.

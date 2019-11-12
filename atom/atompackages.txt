@@ -1,0 +1,6 @@
+atom-hg@2.0.14
+language-powershell@5.0.0
+markdown-preview-enhanced@0.15.8
+multi-cursor@2.1.5
+vim-mode-plus@1.36.0
+

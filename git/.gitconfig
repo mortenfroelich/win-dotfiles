@@ -1,0 +1,57 @@
+[user]
+	name = Morten Frølich
+	email = mortenfroelich@users.noreply.github.com
+[alias]
+	ai = add -i
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+
+	# View the current working tree status using short format
+	s = status -s
+
+	# Show the diff between the latest commit and the current state
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+
+	# Amend the currently staged files to the latest commit
+	amend = commit --amend --reuse-message=HEAD
+
+	# Commit all changes
+	ca = !git add -A && git commit -av
+
+	# Color graph log view
+	graph = log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
+
+	# Compact log views uses --all to get everything
+	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg3 = log --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+	lg = !"git lg1"
+	cob = "checkout -b"
+	rb = "!MERGE_BASE=$(git merge-base origin/master HEAD); git diff -M --full-index $MERGE_BASE HEAD"
+	rom = "rebase origin/master"
+	dom = "diff origin/master"
+	ms = "merge --squash"
+	comp = !"git co master && git pull"
+	rmorig = !"git status --porcelain | awk '/^\\?.*orig/{print $2}' | xargs rm -v"
+	rmpound = !"git status --porcelain | awk '/^\\??.*\\/#[^\\/]*#$/{print $2}' | xargs rm -v"
+	rmuntracked = !"git status --porcelain | awk '/^\\?/{print $2}' | xargs rm -v"
+	todo = !"git diff --name-only origin/master | xargs grep -i -C3 '@todo'"
+[merge]
+	tool = kdiff3
+[mergetool "kdiff3"]
+	path = C:\\Program Files\\RepoMan\\lib\\kdiff3.exe
+[mergetool]
+	keepBackup = false
+[core]
+	editor = nvim
+	autocrlf = true

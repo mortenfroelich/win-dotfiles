@@ -1,0 +1,38 @@
+"*":
+  "":
+    md:
+      text:
+        editor:
+          softWrap: false
+  "autocomplete-plus":
+    confirmCompletion: "tab always, enter when suggestion explicitly selected"
+  core:
+    autoHideMenuBar: true
+    disabledPackages: [
+      "markdown-preview"
+      "pandoc"
+      "markdown-preview-plus-opener"
+      "metrics"
+      "exception-reporting"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+    uriHandlerRegistration: "always"
+  editor:
+    fontSize: 16
+  "markdown-preview-enhanced":
+    previewTheme: "solarized-dark.css"
+    usePandocParser: true
+  "markdown-preview-plus":
+    mathConfig: {}
+    renderer: "pandoc"
+    syncConfig: {}
+  "markdown-preview-plus-opener":
+    closePreviewWhenClosingEditor: true
+  "vim-mode-plus":
+    useSmartcaseForSearch: true
+  welcome:
+    showOnStartup: false

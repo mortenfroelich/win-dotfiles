@@ -1,0 +1,58 @@
+set gdefault                      " substitute all occurrences in line per default
+set history=10000                  " keep x lines of command line history
+" set hlsearch                      " highlight search occurrences
+set ignorecase                    " ignore case in search patterns
+set smartcase                     " no ignore case when pattern is uppercase
+set incsearch                     " show search results while typing
+set wrapscan                      " searches wrap around the end of the file
+set number                        " line numbers
+set scrolloff=5 sidescrolloff=10  " keep some lines before and after the cursor visible
+set clipboard=unnamedplus,unnamed " integrate with system clipboard
+set surround " emulate vim-surround plugin
+
+let mapleader = " "
+
+" edit ideavim config
+nnoremap <leader>vv :e C:\Users\morten.frolich\.ideavimrc<CR>
+nnoremap <leader>vr :source C:\Users\morten.frolich\.ideavimrc<CR>
+
+" IDEA specific
+nmap <leader>? :action GoToAction<CR>
+nmap <leader>t :action SearchEverywhere<CR>
+" Currently used by expand region
+" nmap <leader>e :action GotoFile<CR>
+nmap <leader>a :action FindInPath<CR>
+nmap <leader>h :action ReplaceInPath<CR>
+nmap <leader>r :action RecentFiles<CR>
+nmap <leader>q :action QuickFixes<CR>
+
+nmap J :action NextTab<CR>
+nmap K :action PreviousTab<CR>
+
+nmap <leader>b :action Back<CR>
+nmap <leader>f :action Forward<CR>
+nmap <leader>j :action MethodDown<CR>
+nmap <leader>k :action MethodUp<CR>
+nmap gd :action GotoDeclaration<CR>
+nmap gD :action GotoImplementation<CR>
+nmap gi :action ReSharperGotoImplementation<CR>
+nmap <leader>u :action ShowUsages<CR>
+nmap <leader>U :action FindUsages<CR>
+nmap <C-p> :action ParameterInfo<CR>
+imap <C-p> <C-o>:action ParameterInfo<CR>
+nmap <leader>n :action GotoNextError<CR>
+nmap <leader>N :action ReSharperGotoNextErrorInSolution<CR>
+" nmap <leader>n :action NextOccurence<CR>
+
+" refactoring
+nmap <leader>R :action Refactorings.QuickListPopupAction<CR>
+nmap <leader>O :action OptimizeImports<CR>
+nmap <leader>G :action Generate<CR>
+nmap <leader>F :action ReformatCode<CR>
+
+" utility
+map <leader>m :action CommentByLineComment<CR>
+nmap <leader>c :action CollapseRegion<CR>
+nmap <leader>e :action ExpandRegion<CR>
+" vmap <leader>m :action CommentByLineComment<CR>
+set clipboard+=ideaput

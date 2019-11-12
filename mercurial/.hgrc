@@ -1,0 +1,11 @@
+[ui]
+username = Morten Frølich <mortenfroelich@users.noreply.github.com>
+
+[extensions]
+histedit =
+churn =
+evolve =
+topic =
+
+[thg-color]
+log.topic = #bbaaee_background
