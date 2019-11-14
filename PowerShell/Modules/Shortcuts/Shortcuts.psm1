@@ -59,7 +59,7 @@ function Set-TouchItem{
         echo $null > $file
 }
 
-function Find-Root{
+function Find-RepoRoot{
     <#
 .SYNOPSIS
      Find the root of the current repository of the given type. defaults to .git

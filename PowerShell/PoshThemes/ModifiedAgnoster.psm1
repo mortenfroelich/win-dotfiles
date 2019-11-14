@@ -22,7 +22,7 @@ function Get-ModulePrompt($path, $root){
 }
 
 function Get-HgPrompt{
-    if(Find-Root -type ".hg"){
+    if(Find-RepoRoot -type ".hg"){
         Invoke-Expression 'hg summary' | foreach {
   		      switch -regex ($_) {
   			        'branch: ([\S ]*)' { $branch = $matches[1] }
@@ -83,7 +83,7 @@ function Write-Theme {
             $prompt += Write-Prompt -Object $clone -ForegroundColor $sl.Colors.PromptForegroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
             $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $sl.Colors.SessionInfoBackgroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
         }
-        $root = Find-Root -type ".repo"
+        $root = Find-RepoRoot -type ".repo"
         $solution = Get-SolutionPrompt($root)
         if($solution){
             $prompt += Write-Prompt -Object $solution -ForegroundColor $sl.Colors.PromptForegroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor

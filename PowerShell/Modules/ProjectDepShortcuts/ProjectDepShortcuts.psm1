@@ -83,8 +83,8 @@ function drafts{
     #>
     [cmdletbinding()]
     Param()
-    Push-Location (Find-Root -type ".repo")
-    Get-ChildItem -Directory | %{
+    Push-Location (Find-RepoRoot -type ".repo")
+    Get-ChildItem -Directory | ForEach-Object{
         if(Test-Path (Join-Path $_.FullName '.hg')){
             Push-Location $_.FullName
             Write-Output (Split-Path $_.FullName -Leaf)
@@ -121,10 +121,10 @@ Change to solution, used to quickly jump between standardized solutions in 1, 2 
     Param(
         [string]$s)
 
-    $root = Find-Root -type ".repo"
+    $root = Find-RepoRoot -type ".repo"
     if ($s -Match '.*(\d).*')
     {
-        $cloneRoot = "C:\src\$Matches[1]"
+        $cloneRoot = Join-Path "C:\src\" $Matches[1]
         Write-Verbose "$s matches a clone, setting cloneRoot to $cloneRoot"
     }else{
         Write-Verbose "Root not specified, found root: $root"
@@ -135,7 +135,7 @@ Change to solution, used to quickly jump between standardized solutions in 1, 2 
           Write-Verbose "No cloneRoot found defaulting to cloneRoot: $cloneRoot"
       }
     }
-    $solution = Get-FullSolutionName($s) -ErrorAction SilentlyContinue
+    $solution = Get-FullSolutionName -s $s -noThrow
     if(-not $solution){
         if($root){
             $solution = Split-Path -Leaf $root
@@ -154,12 +154,12 @@ Change to solution, used to quickly jump between standardized solutions in 1, 2 
     $goto = Join-Path $solutionRoot $rest
   if(Test-Path $goto){
       Write-Verbose "Changing to $goto"
-    cd $goto
+    Set-Location $goto
   }else
   {
       Write-Verbose "Cannot find folder in solution going to root: $solutionRoot"
       if(-not (Test-Path $solutionRoot)){throw 'Cannot find solution root, did you forget to create the default clones?'}
-      cd $solutionRoot
+      Set-Location $solutionRoot
   }
 }
 
@@ -169,7 +169,7 @@ function Get-FullSolutionName{
 Map shorthand solution names to full solutions.
 #>
     [Cmdletbinding()]
-    Param([string]$s,[switch]$allowMaster)
+    Param([string]$s,[switch]$noThrow)
     Process {
         Foreach ($solutionPattern in $conf.solutionPatterns){
             Write-Verbose "Trying to match pattern: .*$($solutionPattern.pattern).*"
@@ -179,7 +179,7 @@ Map shorthand solution names to full solutions.
             }
         }
         Write-Verbose "No matching solution found."
-        if($ErrorAction -ne 'SilentlyContinue')
+        if(-not $noThrow)
         {
             throw "Unknown solution: " + $s
         }
@@ -187,7 +187,7 @@ Map shorthand solution names to full solutions.
 }
 
 function Get-SolutionPath($solution){
-    $root = Find-Root -type ".repo"
+    $root = Find-RepoRoot -type ".repo"
     return (Join-Path (Split-Path ($root)) $solution)
 }
 
@@ -204,16 +204,13 @@ function fors{
     Foreach ($solution in $solutions)
     {
         Push-Location (Get-SolutionPath $solution)
-        Write-Host "Running '$command' for: " (pwd)
+        Write-Host "Running '$command' for: " (Get-Location)
         Invoke-Expression "& $command"
         Pop-Location
     }
 }
 
 function bundle($name){
-    if(!(pwd | Out-String) -Match 'MASTER|MAIN'){
-        throw "Current folder is not part of master or main clone"
-    }
     if(!$name){
         $name = "temp"
     }

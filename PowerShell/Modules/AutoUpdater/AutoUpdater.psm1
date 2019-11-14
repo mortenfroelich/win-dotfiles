@@ -38,8 +38,8 @@ function Find-AutoUpdates(){
 function Update-Profile(){
     Write-Host 'Checking for profile updates:'
     git fetch
-    $upstream= git rev-parse `@{u}
-    $local = git rev-parse `@
+    $upstream= git rev-parse '@{u}'
+    $local = git rev-parse '@'
     $base = git merge-base "$local" "$upstream"
     if($local -eq $upstream){
         Write-Host 'Nothing to update.'
